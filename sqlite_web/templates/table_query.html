@@ -121,4 +121,41 @@
       </div>
     </div>
   </div>
+<script>
+  function saveLocalData(){
+var his = JSON.parse(localStorage.getItem('history_item'))
+
+if(!his)
+his = []
+
+if(his.includes(document.getElementsByTagName('textarea')[0].value))
+return
+
+his.unshift(document.getElementsByTagName('textarea')[0].value)
+
+localStorage.setItem('history_item',JSON.stringify(his))
+
+document.forms[1].submit()
+
+}
+
+
+function loadDataLocal(){
+var content = JSON.parse(localStorage.getItem('history_item'))
+
+if(!content)
+return
+
+var datapasted = `<div style="overflow-y: scroll; height:150px;">`
+
+for(let dattext of content)
+datapasted += `<p>${dattext}</p><br>`
+
+datapasted += "</div>"
+
+$(datapasted).insertBefore('#content > div');
+}
+  setTimeout(()=>{loadDataLocal()},1500)
+</script>
+
 {% endblock %}
